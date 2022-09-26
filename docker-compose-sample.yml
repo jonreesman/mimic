@@ -1,0 +1,82 @@
+
+
+version: "3"
+
+services:
+  mimic-sql:
+      image: mysql:8.0
+      container_name: mimic-sql
+      environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: app
+      volumes:
+        - ./mysql/my.cnf:/etc/mysql/my.cnf
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/init/:/docker-entrypoint-initdb.d/
+      networks:
+        - mimic
+      ports:
+        - 3307:3306
+      platform: linux/amd64
+  test-sql:
+      image: mysql:8.0
+      container_name: test-sql
+      environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: app
+      volumes:
+        - ./mysql/my.cnf:/etc/mysql/my.cnf
+        - ./mysql/test/data:/var/lib/mysql
+        - ./mysql/init/:/docker-entrypoint-initdb.d/
+      networks:
+        - mimic
+      ports:
+        - 3308:3306
+      platform: linux/amd64
+  mimic:
+    image: jreesman1/mimic:latest
+    container_name: mimic
+    environment:
+      TOKEN: ""
+      GOOGLE_APPLICATION_CREDENTIALS: "/etc/gcloud/creds.json"
+      USER_TO_MIMIC: ""
+      VOICE_GUILD: ""
+      VOICE_CHANNEL: ""
+      VOICE_COMMANDER: ""
+      CHANNEL: ""
+      GRPC_SERVER: "mimic-server:8888"
+      DB_URL: "mimic-sql"
+      DB_PORT": "3306"
+      DB_USER": "root"
+      DB_PWD": "password"
+      DB_NAME": "app"
+    networks:
+        - mimic
+    volumes:
+      - /Users/jonreesman/go/google_cloud/mimic-353612-c0533787a373.json:/etc/gcloud/creds.json
+  mimic-server:
+    image: jreesman1/mimic-server:latest
+    container_name: mimic-server
+    environment: 
+      PY_PORT: "8888"
+      USER_TO_MIMIC: ""
+      DB_PORT: "3306"
+      DB_URL: "mimic-sql"
+      DB_USER: "root"
+      DB_PWD: "password"
+      DB_NAME: "app"
+    ports:
+        - 8888:8888
+    networks:
+        - mimic
+    depends_on: 
+      - mimic-sql
+
+volumes:
+  mimic-sql:
+    driver: local
+  test-sql:
+    driver: local
+
+networks:
+  mimic:

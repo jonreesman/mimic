@@ -1,0 +1,4 @@
+grpcio==1.44.0
+markovify==0.9.4
+mysql-connector-python==8.0.29
+protobuf==4.21.1

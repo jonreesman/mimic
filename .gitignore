@@ -1,0 +1,9 @@
+/.vscode
+/logs
+/main_test.go
+/util.py
+/util2.py
+mysql/data/
+mysql/test/
+element/element_final.json
+.gitignore

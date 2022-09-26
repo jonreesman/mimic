@@ -1,0 +1,7 @@
+.env
+./logs
+./py
+docker-compose.yml
+dockerfile
+util.py
+util2.py

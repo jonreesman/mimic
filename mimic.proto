@@ -1,0 +1,16 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "github.com/jonreesman/mimic/pb";
+
+message MsgRequest {
+    string signal = 1;
+}
+
+message MsgResponse {
+    string msg = 1;
+}
+
+service Messages {
+    rpc Detect(MsgRequest) returns (MsgResponse) {}
+}
