@@ -14,6 +14,7 @@ The app additionally is capable of converting the messages to an audio file via 
             - you can leave these as default.
         - mimic
             - `TOKEN` - Set this to a Discord bot token you create yourself on the developer's portal.
+            - `GOOGLE_APPLICATION_CREDENTIALS` - In order for voice to work, you must set up your own GCP account and create a json file of your credentials. Set this variable to your local creds.json file.
             - `USER_TO_MIMIC` - Set this to the ID of a user you would like to mimic
             - `VOICE_GUILD` - Set this to the Discord server ID you want the bot to speak in.
             - `VOICE_CHANNEL` - Set this to the Discord voice channel you want the bot to speak in (I limited it so that the bot didn't get out of hand).
@@ -21,6 +22,12 @@ The app additionally is capable of converting the messages to an audio file via 
             - `CHANNEL` - This env variable is deprecated. It needs to be removed in future versions. Set it to the same as your `VOICE_CHANNEL`.
             - `GRPC_SERVER` - Simply the local address of your markov chain process. If you don't change the defaults on `mimic-server` you can leave as default.
             - All DB variables can be left as default.
+            - Set `volumes` to point to a JSON file that represents your GCP project instance. It'll have the form:
+                ```JSON
+                    "type": "service_account",
+                    "project_id": "YOUR OWN PROJECT ID",
+                    "private_key_id": "YOUR OWN PROJECT PRIVATE ID KEY",
+                ```
         - mimic-server
             - `USER_TO_MIMIC` - Set to same as mimic env variable `USER_TO_MIMIC`.
 

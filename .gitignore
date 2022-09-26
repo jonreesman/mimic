@@ -7,3 +7,7 @@ mysql/data/
 mysql/test/
 element/element_final.json
 .gitignore
+.DS_Store
+mimic
+docker-compose_EXPERIMENTAL.yml
+docker-compose.yml

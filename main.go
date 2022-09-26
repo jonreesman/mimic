@@ -81,12 +81,10 @@ func main() {
 	d.Guilds = d.Session.State.Guilds
 
 	fmt.Println("Bot is: " + d.Session.State.User.Username)
-	fmt.Println("Bot is supposed to be: " + username)
 
 	s := scraped.NewScraper(token)
 	username = s.GetUserName(user)
 	fmt.Println("Bot is: " + d.Session.State.User.Username)
-	fmt.Println("Bot is supposed to be: " + username)
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
@@ -100,12 +98,12 @@ func scrape(d Discord) {
 	if err != nil {
 		log.Printf("Error Scraping channel: %v", err)
 	}
+	//TODO: Replace with .env variable.
 	s.ScrapeChannel(dbm, "879531176166051841", db.DISCORD)
 }
 
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Author != nil && m.Author.Bot && m.Author.Username == username {
-		log.Printf("Message from ")
 		return
 	}
 	if m.Author != nil && m.Author.Bot {
@@ -180,7 +178,6 @@ func VoiceMessage(s *discordgo.Session, guild *discordgo.Guild, authorID string)
 	}
 	if !v.Ready || v == nil {
 		log.Printf("Failed to send voice message.")
-		//return
 	}
 
 	resp, err := GrabMessage()
